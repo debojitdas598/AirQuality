@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.android.volley.Cache;
 import com.android.volley.Network;
@@ -58,6 +59,8 @@ public class MainActivity extends AppCompatActivity  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
         Date currentDate = new Date();
@@ -100,6 +103,7 @@ public class MainActivity extends AppCompatActivity  {
                     for (int i=0;i<24;i++){
                         Log.d("BRO", "onResponse: "+jsonPM10.get(i).toString()+" ");
                         pm10.add(i,jsonPM10.get(i).toString());
+                        pm2_5.add(i,jsonPM2_5.get(i).toString());
                     }
 
                 } catch (JSONException e) {
@@ -121,28 +125,42 @@ public class MainActivity extends AppCompatActivity  {
     public void Graph1(){
 
 
-       ArrayList<Entry> entries = new ArrayList<>();
+       ArrayList<Entry> entries10 = new ArrayList<>();
         for (int i=0;i<pm10.size();i++){
             Log.d("hyuo",pm10.get(i) + " ");
             float x = i;
             float y = Float.parseFloat(pm10.get(i));
-            entries.add(new Entry(x,y));
+            entries10.add(new Entry(x,y));
+        }
+
+        ArrayList<Entry> entries2_5 = new ArrayList<>();
+        for (int i=0;i<pm10.size();i++){
+            Log.d("hyuo",pm2_5.get(i) + " ");
+            float x = i;
+            float y = Float.parseFloat(pm2_5.get(i));
+            entries2_5.add(new Entry(x,y));
         }
 
 
 
-        LineDataSet dataSet = new LineDataSet(entries,"Data set 1");
-        dataSet.setColor(Color.BLUE);
+        LineDataSet dataSet10 = new LineDataSet(entries10,"PM 10");
+        dataSet10.setColor(Color.BLUE);
+
+        LineDataSet dataSet2_5 = new LineDataSet(entries2_5,"PM 2.5");
+        dataSet10.setColor(Color.RED);
 
 
 
-        LineData lineData = new LineData(dataSet);
+        LineData lineData = new LineData();
+        lineData.addDataSet(dataSet10);
+        lineData.addDataSet(dataSet2_5);
         lineChart1.setData(lineData);
         lineChart1.setTouchEnabled(false);
         lineChart1.setDragEnabled(true);
         lineChart1.setScaleEnabled(true);
         lineChart1.animateX(1500);
         lineChart1.animateY(1500);
+
 
         XAxis xAxis = lineChart1.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
