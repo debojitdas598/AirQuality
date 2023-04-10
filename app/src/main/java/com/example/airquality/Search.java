@@ -1,27 +1,19 @@
 package com.example.airquality;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationManager;
-
 import android.os.Bundle;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.android.volley.Cache;
 import com.android.volley.Network;
@@ -35,9 +27,9 @@ import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.StringRequest;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -66,15 +58,7 @@ public class Search extends AppCompatActivity {
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                searcher();
-
-                    intent = new Intent(Search.this, MainActivity.class);
-                    intent.putExtra("longitudunal val", longitude);
-                    intent.putExtra("latitudunal val", latitude);
-                    String s = cityAutocompleteTextView.getText().toString();
-                    intent.putExtra("city name", s);
-                    startActivity(intent);
-
+                     searcher();
 
             }
         });
@@ -123,6 +107,14 @@ public class Search extends AppCompatActivity {
                                 longitude = firstObject.getDouble("longitude");
                                 Toast.makeText(getApplicationContext(), String.valueOf(latitude) + " " + String.valueOf(longitude), Toast.LENGTH_LONG).show();
 
+                                Intent intent1 = new Intent(Search.this, CustomCity.class);
+                                Log.d("dbharry", "onCreate: "+longitude);
+                                intent1.putExtra("longitudunal val", longitude);
+                                intent1.putExtra("latitudunal val", latitude);
+                                String s = cityAutocompleteTextView.getText().toString();
+                                intent1.putExtra("city name", s);
+
+                                startActivity(intent1);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -138,10 +130,7 @@ public class Search extends AppCompatActivity {
                 }
     }
 
-
-
     //gps location lat and long
-
 
     public void requestlocation() {
         if (ActivityCompat.shouldShowRequestPermissionRationale(this,

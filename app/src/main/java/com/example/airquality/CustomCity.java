@@ -1,15 +1,12 @@
 package com.example.airquality;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
@@ -35,56 +32,36 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class MainActivity extends AppCompatActivity  {
-    Intent intent;
-    String city;
+public class CustomCity extends AppCompatActivity {
     double longitude,latitude;
-    TextView textView;
     RequestQueue requestQueue;
     String formattedDate;
-    String server_url = "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=&longitude=&hourly=pm10,pm2_5";
-    LineChart lineChart1;
     ArrayList<String> pm10 = new ArrayList<String>();
     ArrayList<String> pm2_5 = new ArrayList<String>();
+    LineChart lineChart1;
 
-
-
-
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_custom_city);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
-        setContentView(R.layout.activity_main);
-        getSupportActionBar().hide();
+
         Date currentDate = new Date();
         @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         formattedDate = dateFormat.format(currentDate);
-        Log.d("BROTHA", "onCreate: "+ String.valueOf(getIntent().getDoubleExtra("latitudunal val",12345)));
-
-
-
-            LocationHelper locationHelper = new LocationHelper(this);
-            locationHelper.startLocationUpdates();
-            latitude = locationHelper.getLatitude();
-            longitude = locationHelper.getLongitude();
-
-
-
-
-        lineChart1 = (LineChart) findViewById(R.id.lineChart);
+        lineChart1 = findViewById(R.id.lineChart);
         lineChart1.setNoDataText("Loading data...");
-
-
+        longitude = getIntent().getDoubleExtra("longitudunal val", 0);
+        latitude = getIntent().getDoubleExtra("longitudunal val", 0);
         rounder(longitude,latitude);
-        Toast.makeText(getApplicationContext(),"Lat : "+latitude+"\n"+"Longi : "+longitude,Toast.LENGTH_SHORT).show();
-        JSONparsing(latitude,longitude);
+        String city = getIntent().getStringExtra("city name");
+        TextView textView = findViewById(R.id.tv);
+        textView.setText(city+"'s AQI" );
+        JSONparsing(longitude,latitude);
 
 
     }
@@ -105,7 +82,7 @@ public class MainActivity extends AppCompatActivity  {
                     JSONObject jsonHourly = jsonResponse.getJSONObject("hourly");
                     JSONArray jsonPM10 = jsonHourly.getJSONArray("pm10");
                     JSONArray jsonPM2_5 = jsonHourly.getJSONArray("pm2_5");
-                  Log.d("hio","https://air-quality-api.open-meteo.com/v1/air-quality?latitude="+latitude+"&longitude="+longitude+"&hourly=pm10,pm2_5&start_date="+formattedDate+"&end_date="+formattedDate);
+                    Log.d("hio","https://air-quality-api.open-meteo.com/v1/air-quality?latitude="+latitude+"&longitude="+longitude+"&hourly=pm10,pm2_5&start_date="+formattedDate+"&end_date="+formattedDate);
                     for (int i=0;i<24;i++){
                         Log.d("BRO", "onResponse: "+jsonPM10.get(i).toString()+" ");
                         pm10.add(i,jsonPM10.get(i).toString());
@@ -129,7 +106,7 @@ public class MainActivity extends AppCompatActivity  {
 
 
     public void Graph1(){
-       ArrayList<Entry> entries10 = new ArrayList<>();
+        ArrayList<Entry> entries10 = new ArrayList<>();
         for (int i=0;i<pm10.size();i++){
             Log.d("hyuo",pm10.get(i) + " ");
             float x = i;
@@ -177,8 +154,6 @@ public class MainActivity extends AppCompatActivity  {
     }
 
 
-
-
     public void rounder(double l1,double l2){
         String longi = String.valueOf(l1);
         String lati = String.valueOf(l2);
@@ -195,23 +170,4 @@ public class MainActivity extends AppCompatActivity  {
 
 
 
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public static String formatDate(LocalDate date) {
-        LocalDate presentDate = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String formattedDate = presentDate.format(formatter);
-        return formattedDate;
-    }
-
-//    private class MyXAxisValueFormatter extends ValueFormatter implements IAxisValueFormatter {
-//        private String[] mValues = new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun"};
-//
-//        @Override
-//        public String getFormattedValue(float value, AxisBase axis) {
-//            return mValues[(int) value % mValues.length];
-//        }
-//    }
-
 }
-
