@@ -2,10 +2,12 @@ package com.example.airquality;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 
 import com.android.volley.Cache;
@@ -35,6 +38,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import eightbitlab.com.blurview.BlurView;
+import eightbitlab.com.blurview.RenderScriptBlur;
+
 public class Search extends AppCompatActivity {
     Button search, location;
     RequestQueue requestQueue;
@@ -44,22 +50,27 @@ public class Search extends AppCompatActivity {
     FusedLocationProviderClient fusedLocationClient;
     LocationRequest locationRequest;
     AutoCompleteTextView cityAutocompleteTextView;
+    BlurView blurView1;
     private static final int REQUEST_LOCATION_PERMISSION = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        getSupportActionBar().hide();
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
          cityAutocompleteTextView = findViewById(R.id.searchbar);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, getResources().getStringArray(R.array.india_top_places));
         cityAutocompleteTextView.setAdapter(adapter);
+
+
+        blurview();
 
         search = findViewById(R.id.search);
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                      searcher();
-
             }
         });
 
@@ -190,6 +201,18 @@ public class Search extends AppCompatActivity {
                 }
             }
         }, null);
+    }
+
+    public void blurview(){
+
+        float radius = 10f;
+        View decorView = getWindow().getDecorView();
+        ViewGroup rootView = decorView.findViewById(android.R.id.content);
+        blurView1 = findViewById(R.id.blurview1);
+        Drawable windowBackground = decorView.getBackground();
+        blurView1.setupWith(rootView, new RenderScriptBlur(this)).setFrameClearDrawable(windowBackground).setBlurRadius(radius);
+
+
     }
 
 

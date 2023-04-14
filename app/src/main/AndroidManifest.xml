@@ -34,10 +34,10 @@
             android:name=".CustomCity"
             android:exported="true" />
         <activity
-            android:name=".Search"
+            android:name=".MainActivity"
             android:exported="true" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Search"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
