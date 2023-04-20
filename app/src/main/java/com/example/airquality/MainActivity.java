@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity  {
         lineChart1.setNoDataText("Loading data...");
     }
 
-
+    //api call for aqi data
     public void JSONparsing(double l1,double l2){
         Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024);
         Network network = new BasicNetwork(new HurlStack());
@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity  {
         requestQueue.add(stringRequest);
     }
 
-
+    //graph for today's aqi data
     public void Graph1(){
 
         Description description = new Description();
@@ -257,6 +257,7 @@ public class MainActivity extends AppCompatActivity  {
 
     }
 
+    //graph for tomorrow's aqi
     public void Graph2(){
         double sumpm2_5=0,sumpm10=0,sumaqi=0,sumco=0;
         ArrayList<Entry> entries10 = new ArrayList<>();
@@ -364,6 +365,7 @@ public class MainActivity extends AppCompatActivity  {
 
     }
 
+    //graph for 4day's's aqi
     public void Graph3(){
         double sumpm2_5=0,sumpm10=0,sumaqi=0,sumco=0;
         ArrayList<Entry> entries10 = new ArrayList<>();
@@ -489,6 +491,7 @@ public class MainActivity extends AppCompatActivity  {
 
     }
 
+    //rounds the geocoded lat and longi to two decimal places
     private void rounder(double l1,double l2){
         String longi = String.valueOf(l1);
         String lati = String.valueOf(l2);
@@ -502,8 +505,8 @@ public class MainActivity extends AppCompatActivity  {
         latitude = Double.valueOf(newlati);
     }
 
-   private void setValues(){
-
+    //set's value (aqi,pm,co)
+    private void setValues(){
        aqitext.setText(String.valueOf(Math.round(aqiavg)));
        pm10text.setText(String.valueOf(Math.round(pm10avg)));
        pm2_5text.setText(String.valueOf(Math.round(pm2_5avg)));
@@ -535,8 +538,8 @@ public class MainActivity extends AppCompatActivity  {
        }
    }
 
-   public void bottomnav(){
-
+    //code for bottom navigation bar(today,tomorrow,4days)
+    public void bottomnav(){
         tomorrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -583,7 +586,8 @@ public class MainActivity extends AppCompatActivity  {
 
    }
 
-   public void dateManager(){
+    //manages dates
+    public void dateManager(){
 
        Calendar calendar = Calendar.getInstance(); // Get current date
        calendar.add(Calendar.DAY_OF_YEAR, 4); // Add 10 days to current date
@@ -608,6 +612,7 @@ public class MainActivity extends AppCompatActivity  {
 
    }
 
+    //code for making cardview blur(glassmorph)(uses BlueView library)
     public void blurview(){
 
         float radius = 10f;

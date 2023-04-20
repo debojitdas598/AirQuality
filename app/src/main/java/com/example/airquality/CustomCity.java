@@ -73,7 +73,10 @@ public class CustomCity extends AppCompatActivity {
 
         longitude = getIntent().getDoubleExtra("longitudunal val", 0);
         latitude = getIntent().getDoubleExtra("latitudunal val", 0);
-        rounder(longitude,latitude);
+        if(String.valueOf(latitude).length()>4 && String.valueOf(longitude).length() > 4 ){
+            rounder(longitude,latitude);
+        }
+
         city = getIntent().getStringExtra("city name");
 
         JSONparsing(longitude,latitude);
@@ -101,7 +104,7 @@ public class CustomCity extends AppCompatActivity {
         lineChart1.setNoDataText("Loading data...");
     }
 
-
+    //api call for aqi data
     public void JSONparsing(double l1,double l2){
         Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024);
         Network network = new BasicNetwork(new HurlStack());
@@ -143,6 +146,7 @@ public class CustomCity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
+    //api call for bg image
     public void backgroundImageParsing(String city){
         requestQueue2 = Volley.newRequestQueue(getApplicationContext());
         String url = "https://source.unsplash.com/720x1200/?+city=" + city;
@@ -157,7 +161,7 @@ public class CustomCity extends AppCompatActivity {
 
     }
 
-
+    //graph for today's aqi data
     public void Graph1(){
         double sumpm2_5=0,sumpm10=0,sumaqi=0,sumco=0;
         ArrayList<Entry> entries10 = new ArrayList<>();
@@ -265,6 +269,7 @@ public class CustomCity extends AppCompatActivity {
 
     }
 
+    //graph for tomorrow's aqi
     public void Graph2(){
         double sumpm2_5=0,sumpm10=0,sumaqi=0,sumco=0;
         ArrayList<Entry> entries10 = new ArrayList<>();
@@ -369,6 +374,7 @@ public class CustomCity extends AppCompatActivity {
 
     }
 
+    //graph for 4day's's aqi
     public void Graph3(){
         double sumpm2_5=0,sumpm10=0,sumaqi=0,sumco=0;
         ArrayList<Entry> entries10 = new ArrayList<>();
@@ -479,6 +485,7 @@ public class CustomCity extends AppCompatActivity {
 
     }
 
+    //set's value (aqi,pm,co)
     private void setValues(){
         aqitext.setText(String.valueOf(Math.round(aqiavg)));
         pm10text.setText(String.valueOf(Math.round(pm10avg)));
@@ -511,6 +518,7 @@ public class CustomCity extends AppCompatActivity {
         }
     }
 
+    //code for bottom navigation bar(today,tomorrow,4days)
     public void bottomnav(){
 
         tomorrow.setOnClickListener(new View.OnClickListener() {
@@ -557,7 +565,7 @@ public class CustomCity extends AppCompatActivity {
 
     }
 
-
+//rounds the geocoded lat and longi to two decimal places
     public void rounder(double l1,double l2){
         String longi = String.valueOf(l1);
         String lati = String.valueOf(l2);
@@ -571,6 +579,7 @@ public class CustomCity extends AppCompatActivity {
         latitude = Double.valueOf(newlati);
     }
 
+    //manages dates
     public void dateManager(){
 
         Calendar calendar = Calendar.getInstance(); // Get current date
@@ -592,6 +601,7 @@ public class CustomCity extends AppCompatActivity {
 
     }
 
+    //code for making cardview blur(glassmorph)(uses BlueView library)
     public void blurview(){
 
         float radius = 20f;

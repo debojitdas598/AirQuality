@@ -73,6 +73,7 @@ public class Search extends AppCompatActivity {
         blurview();
 
         search = findViewById(R.id.search);
+        search.setPaintFlags(search.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

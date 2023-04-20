@@ -31,14 +31,19 @@
         android:theme="@style/Theme.AirQuality"
         tools:targetApi="31">
         <activity
+            android:name=".Search"
+            android:exported="true"/>
+        <activity
             android:name=".CustomCity"
             android:exported="true" />
         <activity
             android:name=".MainActivity"
             android:exported="true" />
         <activity
-            android:name=".Search"
-            android:exported="true">
+            android:name=".Splash"
+            android:exported="true"
+            android:noHistory="true"
+           >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
