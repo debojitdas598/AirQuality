@@ -80,7 +80,7 @@ public class CustomCity extends AppCompatActivity {
         bottomnav();
         blurview();
         backgroundImageParsing(city);
-        cityname.setText(city+"'s AQI" );
+        cityname.setText(city.substring(0,1).toUpperCase()+city.substring(1).toLowerCase()+"'s AQI" );
         datetext.setText(longdate);
 
 
@@ -248,11 +248,15 @@ public class CustomCity extends AppCompatActivity {
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawGridLines(false);
         xAxis.setAxisMinimum(0);
+        xAxis.setTextColor(Color.WHITE);
+        xAxis.setAxisLineColor(Color.WHITE);
 
 
         YAxis yAxis = lineChart1.getAxisLeft();
         yAxis.setAxisMinimum(0);
         yAxis.setDrawGridLines(false);
+        yAxis.setTextColor(Color.WHITE);
+        yAxis.setAxisLineColor(Color.WHITE);
 
         lineChart1.getAxisRight().setEnabled(false);
         lineChart1.invalidate();

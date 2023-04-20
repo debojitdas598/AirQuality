@@ -2,6 +2,7 @@ package com.example.airquality;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
@@ -11,11 +12,13 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 
 import com.android.volley.Cache;
@@ -42,8 +45,9 @@ import eightbitlab.com.blurview.BlurView;
 import eightbitlab.com.blurview.RenderScriptBlur;
 
 public class Search extends AppCompatActivity {
-    Button search, location;
+    Button search;
     RequestQueue requestQueue;
+    TextView location;
     double latitude, longitude;
     Intent intent;
     String server_url = "https://geocoding-api.open-meteo.com/v1/search?name=";
@@ -51,6 +55,7 @@ public class Search extends AppCompatActivity {
     LocationRequest locationRequest;
     AutoCompleteTextView cityAutocompleteTextView;
     BlurView blurView1;
+    CardView progressbar;
     private static final int REQUEST_LOCATION_PERMISSION = 1;
 
     @Override
@@ -63,6 +68,7 @@ public class Search extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, getResources().getStringArray(R.array.india_top_places));
         cityAutocompleteTextView.setAdapter(adapter);
 
+        progressbar = findViewById(R.id.progressbar);
 
         blurview();
 
@@ -75,6 +81,7 @@ public class Search extends AppCompatActivity {
         });
 
         location = findViewById(R.id.location);
+        location.setPaintFlags(location.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
         location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,10 +113,12 @@ public class Search extends AppCompatActivity {
                 if (cityAutocompleteTextView.getText().toString().trim().isEmpty() == true) {
                     Toast.makeText(getApplicationContext(), "Enter a city name", Toast.LENGTH_LONG).show();
                 } else {
+                    progressbar.setVisibility(View.VISIBLE);
                     String server_url_temp = server_url + cityAutocompleteTextView.getText().toString().trim();
                     StringRequest stringRequest = new StringRequest(Request.Method.GET, server_url_temp, new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
+                            progressbar.setVisibility(View.INVISIBLE);
                             try {
                                 JSONObject jsonResponse = new JSONObject(response);
                                 JSONArray jsonArray = jsonResponse.getJSONArray("results");
@@ -133,12 +142,14 @@ public class Search extends AppCompatActivity {
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
+                            progressbar.setVisibility(View.INVISIBLE);
                             Toast.makeText(getApplicationContext(), "Something went wrong...", Toast.LENGTH_LONG).show();
                             error.printStackTrace();
                         }
                     });
                     requestQueue.add(stringRequest);
                 }
+
     }
 
     //gps location lat and long

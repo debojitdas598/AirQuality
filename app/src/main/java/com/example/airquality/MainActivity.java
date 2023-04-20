@@ -415,7 +415,7 @@ public class MainActivity extends AppCompatActivity  {
 
         for (int i=0;i<co.size();i++){
             Log.d("hyuo",co.get(i) + " ");
-           if(co.get(i)!=null){
+           if(co.get(i)!="null"){
                float y = Float.parseFloat(co.get(i));
                sumco = sumco +y;
            }
@@ -489,7 +489,6 @@ public class MainActivity extends AppCompatActivity  {
 
     }
 
-
     private void rounder(double l1,double l2){
         String longi = String.valueOf(l1);
         String lati = String.valueOf(l2);
@@ -502,7 +501,6 @@ public class MainActivity extends AppCompatActivity  {
         longitude = Double.valueOf(newlongi);
         latitude = Double.valueOf(newlati);
     }
-
 
    private void setValues(){
 
