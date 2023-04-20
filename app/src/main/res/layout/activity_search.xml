@@ -137,12 +137,66 @@
             android:layout_height="match_parent"
             android:id="@+id/blurview1"/>
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="15dp"
-                android:textColor="@color/white"
-                android:text="About me"/>
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="15dp"
+                    android:textSize="20dp"
+                    android:textColor="@color/white"
+                    android:text="About"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:lineSpacingExtra="2dp"
+
+                    android:text="Hello, I am Debobroto Das. I am currently pursuing B.E. degree in DSCE, Bangalore. I have a keen interest in Android App Developement. This app's purpose is to obtain and show Air Quality Index and its data."
+                    android:textColor="@color/white"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="7dp"
+                    />
+               <LinearLayout
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal"
+                   android:layout_marginTop="10dp">
+
+                   <TextView
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:id="@+id/github"
+                       android:text="GitHub"
+                       android:textColor="@color/white"
+                       android:layout_marginHorizontal="20dp"
+                       android:layout_marginTop="7dp"
+                       android:autoLink="web"
+                       android:clickable="true"
+                       />
+                   <TextView
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:text="InstaGram"
+                       android:id="@+id/insta"
+                       android:textColor="@color/white"
+                       android:layout_marginHorizontal="20dp"
+                       android:layout_marginTop="7dp"
+                       android:autoLink="web"
+                       android:clickable="true"
+                       />
+
+               </LinearLayout>
+
+
+
+            </LinearLayout>
+
+
+
 
 
         </androidx.cardview.widget.CardView>

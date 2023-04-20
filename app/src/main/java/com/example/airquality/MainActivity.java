@@ -209,8 +209,8 @@ public class MainActivity extends AppCompatActivity  {
         lineChart1.setTouchEnabled(true);
         lineChart1.setDragEnabled(true);
         lineChart1.setScaleEnabled(true);
-        lineChart1.animateX(1500);
-        lineChart1.animateY(1500);
+        lineChart1.animateX(500);
+        lineChart1.animateY(500);
 
         dataSetaqi.setMode(LineDataSet.Mode.CUBIC_BEZIER);
         dataSetaqi.setCubicIntensity(0.2f);
@@ -315,8 +315,8 @@ public class MainActivity extends AppCompatActivity  {
         lineChart1.setTouchEnabled(true);
         lineChart1.setDragEnabled(true);
         lineChart1.setScaleEnabled(true);
-        lineChart1.animateX(1500);
-        lineChart1.animateY(1500);
+        lineChart1.animateX(500);
+        lineChart1.animateY(500);
 
         dataSetaqi.setMode(LineDataSet.Mode.CUBIC_BEZIER);
         dataSetaqi.setCubicIntensity(0.2f);
@@ -442,8 +442,8 @@ public class MainActivity extends AppCompatActivity  {
         lineChart1.setTouchEnabled(true);
         lineChart1.setDragEnabled(true);
         lineChart1.setScaleEnabled(true);
-        lineChart1.animateX(1500);
-        lineChart1.animateY(1500);
+        lineChart1.animateX(500);
+        lineChart1.animateY(500);
 
         dataSetaqi.setMode(LineDataSet.Mode.CUBIC_BEZIER);
         dataSetaqi.setCubicIntensity(0.2f);

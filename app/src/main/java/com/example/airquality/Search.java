@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -47,7 +48,7 @@ import eightbitlab.com.blurview.RenderScriptBlur;
 public class Search extends AppCompatActivity {
     Button search;
     RequestQueue requestQueue;
-    TextView location;
+    TextView location,github,insta;
     double latitude, longitude;
     Intent intent;
     String server_url = "https://geocoding-api.open-meteo.com/v1/search?name=";
@@ -71,6 +72,7 @@ public class Search extends AppCompatActivity {
         progressbar = findViewById(R.id.progressbar);
 
         blurview();
+        aboutLink();
 
         search = findViewById(R.id.search);
         search.setPaintFlags(search.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
@@ -223,6 +225,31 @@ public class Search extends AppCompatActivity {
         blurView1 = findViewById(R.id.blurview1);
         Drawable windowBackground = decorView.getBackground();
         blurView1.setupWith(rootView, new RenderScriptBlur(this)).setFrameClearDrawable(windowBackground).setBlurRadius(radius);
+
+
+    }
+    private void aboutLink(){
+        insta = findViewById(R.id.insta);
+        insta.setPaintFlags(insta.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
+        github = findViewById(R.id.github);
+        github.setPaintFlags(github.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
+
+        insta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Handle the click event here, for example:
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.instagram.com/debo_is_here_/"));
+                startActivity(browserIntent);
+            }
+        });
+        github.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Handle the click event here, for example:
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/debojitdas598"));
+                startActivity(browserIntent);
+            }
+        });
 
 
     }
